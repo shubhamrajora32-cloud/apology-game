@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Little Game For You 💗</title>
+<style>
+  :root { --pink:#f8b8d0; --deep:#b93870; --pale:#fff2f7; --cream:#fffafd; --ink:#593548; --line:#f2cddd; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; font-family: ui-rounded, "Trebuchet MS", system-ui, sans-serif; color:var(--ink);
+    background: radial-gradient(circle at 15% 15%, #fff 0 4%, transparent 25%), linear-gradient(135deg,#ffe7f0,#fff6fa 55%,#fce0ed);
+    display:flex; align-items:center; justify-content:center; padding:22px; }
+  .app { width:min(100%,560px); }
+  .top { text-align:center; margin-bottom:16px; }
+  .eyebrow { color:var(--deep); letter-spacing:.13em; font-size:.72rem; font-weight:800; }
+  h1 { margin:.35rem 0; font-size:clamp(1.8rem,7vw,2.55rem); line-height:1.1; }
+  .subtitle { margin:.5rem auto 0; max-width:38ch; line-height:1.55; color:#86586e; }
+  .card { background:rgba(255,250,253,.94); border:1px solid var(--line); border-radius:28px; padding:clamp(20px,5vw,32px); box-shadow:0 18px 50px #b9387015; }
+  .progress { display:flex; gap:7px; margin-bottom:24px; }
+  .dot { flex:1; height:7px; border-radius:99px; background:#f6dce7; transition:background .25s; }
+  .dot.active { background:#d95b91; }
+  .stage-icon { font-size:2.7rem; text-align:center; margin:0 0 8px; }
+  h2 { text-align:center; margin:.2rem 0 .65rem; font-size:1.45rem; }
+  .bodycopy { text-align:center; line-height:1.65; margin:0 auto 20px; max-width:42ch; }
+  .choices { display:grid; gap:10px; }
+  button { font:inherit; cursor:pointer; border:0; border-radius:16px; padding:14px 16px; font-weight:750; transition:transform .15s, filter .15s; }
+  button:hover { filter:brightness(.985); transform:translateY(-1px); }
+  button:focus-visible { outline:3px solid #b93870; outline-offset:3px; }
+  .primary { background:linear-gradient(135deg,#e66b9f,#cf4c86); color:white; box-shadow:0 7px 18px #cf4c8625; }
+  .secondary { background:#ffedf4; color:#9d3767; border:1px solid #f3ccdc; }
+  .reveal { background:#fff; border:1px dashed #e7a6c1; border-radius:16px; padding:15px; line-height:1.6; margin-top:12px; animation:pop .22s ease-out; }
+  .hidden { display:none !important; }
+  .tiny { font-size:.84rem; text-align:center; color:#9b7185; margin:17px 0 0; line-height:1.5; }
+  .hearts { letter-spacing:.25em; color:#d6538b; text-align:center; margin:0 0 14px; }
+  .letter { text-align:left; background:#fff6fa; border-radius:18px; padding:18px; line-height:1.75; border:1px solid #f5d5e2; }
+  .letter strong { color:#a93369; }
+  .footer { text-align:center; margin-top:14px; font-size:.78rem; color:#9b7185; }
+  @keyframes pop { from {opacity:0;transform:scale(.98)} to {opacity:1;transform:scale(1)} }
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after {animation:none!important;transition:none!important;} }
+</style>
+</head>
+<body>
+<main class="app">
+  <header class="top">
+    <div class="eyebrow">A TINY LITTLE SIDE QUEST ♡</div>
+    <h1>Operation: I'm Sorry 💗</h1>
+    <p class="subtitle">A small game for one very important girl. No scores, no pressure—just a little love.</p>
+  </header>
+
+  <section class="card" aria-live="polite">
+    <div class="progress" aria-label="Game progress">
+      <span class="dot active" id="dot1"></span><span class="dot" id="dot2"></span><span class="dot" id="dot3"></span>
+    </div>
+
+    <section id="level1">
+      <div class="stage-icon">🕵🏻‍♀️</div>
+      <h2>Level 1: A very serious mystery</h2>
+      <p class="bodycopy">A certain silly boy has a question for you… who deserves to feel appreciated and important?</p>
+      <div class="choices">
+        <button class="secondary" id="randomChoice">A random person, obviously 🤨</button>
+        <button class="primary" id="youChoice">The girl reading this 💗</button>
+      </div>
+      <div id="level1Reveal" class="reveal hidden"></div>
+      <button id="toLevel2" class="primary hidden" style="width:100%;margin-top:14px">Okay, next level →</button>
+    </section>
+
+    <section id="level2" class="hidden">
+      <div class="stage-icon">💌</div>
+      <h2>Level 2: Unlock the little truths</h2>
+      <p class="bodycopy">Tap each heart to unlock a reason you're special to me. (And yes, this boy is being serious for once. 🥹)</p>
+      <div class="choices">
+        <button class="secondary truth" data-truth="truth1">♡ A little truth #1</button>
+        <div id="truth1" class="reveal hidden">I appreciate the care and effort you put into the people you love. You deserve to have that care returned, too. 🌷</div>
+        <button class="secondary truth" data-truth="truth2">♡ A little truth #2</button>
+        <div id="truth2" class="reveal hidden">Your feelings matter—even when I don't immediately understand them. I want to listen instead of brushing them aside. 🫶</div>
+        <button class="secondary truth" data-truth="truth3">♡ A little truth #3</button>
+        <div id="truth3" class="reveal hidden">You shouldn't have to guess whether you're important to me. I want to show you through the way I treat you. 💗</div>
+      </div>
+      <button id="toLevel3" class="primary hidden" style="width:100%;margin-top:16px">Open the final letter 💌</button>
+    </section>
+
+    <section id="level3" class="hidden">
+      <div class="stage-icon">🧸💗</div>
+      <h2>Level 3: One thing I really mean</h2>
+      <p class="bodycopy">The playful part can wait a second. This bit is from the heart.</p>
+      <div class="letter">
+        Hey, meri jaan 🥹❤️<br><br>
+        I'm sorry my text made you feel <strong>unimportant</strong>. I might have thought it was a small, silly thing, but that doesn't make the way it affected you small. I should've been more thoughtful with your feelings.<br><br>
+        You matter to me, and I don't want you to have to keep wondering that. I want to show it better by listening properly, taking your feelings seriously, and being more mindful of how my words come across.<br><br>
+        You don't have to be okay straight away, and you don't owe me instant forgiveness because I made this little game. I just wanted to say sorry in a way that feels like me—and remind you that you're important to me. 💗<br><br>
+        <strong>Made with love by your silly boy ♡</strong>
+      </div>
+      <p class="bodycopy" style="margin-top:18px;margin-bottom:12px">Side quest complete. The real mission is showing it in my actions. 🌷</p>
+      <button id="restart" class="secondary" style="width:100%">Play again ↻</button>
+      <button id="copyMessage" class="primary" style="width:100%;margin-top:10px">Copy the apology 💌</button>
+      <div id="copyFeedback" class="tiny hidden">Apology copied—paste it wherever you'd like. 💗</div>
+    </section>
+  </section>
+  <p class="tiny">Made for you, not to rush you. Take all the time you need. ♡</p>
+  <div class="footer">A tiny reminder: kind words matter, and so do kind actions.</div>
+</main>
+<script>
+  const sections = ["level1", "level2", "level3"];
+  function showLevel(n) {
+    sections.forEach((id, i) => document.getElementById(id).classList.toggle("hidden", i !== n-1));
+    [1,2,3].forEach(i => document.getElementById("dot"+i).classList.toggle("active", i <= n));
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+  const reveal1 = document.getElementById("level1Reveal");
+  const next2 = document.getElementById("toLevel2");
+  function answerMystery() {
+    reveal1.textContent = "Correct answer: YOU, silly. 💗 But saying you're important isn't enough—I need to make sure my actions help you feel it, too. I'm sorry I didn't do that well with my text.";
+    reveal1.classList.remove("hidden");
+    next2.classList.remove("hidden");
+    document.getElementById("randomChoice").disabled = true;
+    document.getElementById("youChoice").disabled = true;
+  }
+  document.getElementById("randomChoice").addEventListener("click", answerMystery);
+  document.getElementById("youChoice").addEventListener("click", answerMystery);
+  next2.addEventListener("click", () => showLevel(2));
+
+  const truthButtons = [...document.querySelectorAll(".truth")];
+  truthButtons.forEach(btn => btn.addEventListener("click", () => {
+    const panel = document.getElementById(btn.dataset.truth);
+    panel.classList.toggle("hidden");
+    btn.textContent = panel.classList.contains("hidden") ? "♡ A little truth" : "♥ Unlocked!";
+    btn.disabled = !panel.classList.contains("hidden");
+    if (truthButtons.every(b => b.disabled)) document.getElementById("toLevel3").classList.remove("hidden");
+  }));
+  document.getElementById("toLevel3").addEventListener("click", () => showLevel(3));
+  document.getElementById("restart").addEventListener("click", () => {
+    reveal1.classList.add("hidden"); next2.classList.add("hidden");
+    document.getElementById("randomChoice").disabled = false;
+    document.getElementById("youChoice").disabled = false;
+    truthButtons.forEach((b, i) => {
+      b.disabled = false; b.textContent = "♡ A little truth #"+(i+1);
+      document.getElementById(b.dataset.truth).classList.add("hidden");
+    });
+    document.getElementById("toLevel3").classList.add("hidden");
+    document.getElementById("copyFeedback").classList.add("hidden");
+    showLevel(1);
+  });
+  document.getElementById("copyMessage").addEventListener("click", async () => {
+    const msg = "Hey, meri jaan 🥹❤️\n\nI'm sorry my text made you feel unimportant. I might have thought it was a small, silly thing, but that doesn't make the way it affected you small. I should've been more thoughtful with your feelings.\n\nYou matter to me, and I don't want you to have to keep wondering that. I want to show it better by listening properly, taking your feelings seriously, and being more mindful of how my words come across.\n\nYou don't have to be okay straight away, and you don't owe me instant forgiveness because I made this little game. I just wanted to say sorry in a way that feels like me—and remind you that you're important to me. 💗";
+    try {
+      await navigator.clipboard.writeText(msg);
+      document.getElementById("copyFeedback").classList.remove("hidden");
+    } catch (e) {
+      const area = document.createElement("textarea"); area.value = msg;
+      area.style.position = "fixed"; area.style.opacity = "0"; document.body.appendChild(area);
+      area.select();
+      try { document.execCommand("copy"); document.getElementById("copyFeedback").classList.remove("hidden"); }
+      catch (_) { alert("Copy wasn't available here. You can select and copy the apology text from the final letter."); }
+      area.remove();
+    }
+  });
+</script>
+</body>
+</html>
